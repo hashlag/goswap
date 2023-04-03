@@ -10,7 +10,7 @@ type APIError struct {
 }
 
 func (re *APIError) Error() string {
-	return fmt.Sprintf("status %d: %s (%s); trace id: %s",
+	return fmt.Sprintf("API error: status %d, %s (%s); trace id: %s",
 		re.Status,
 		re.ErrorText,
 		re.Description,
@@ -18,7 +18,7 @@ func (re *APIError) Error() string {
 	)
 }
 
-type GetCurrency struct {
+type Currency struct {
 	Name              string   `json:"name"`
 	Symbol            string   `json:"symbol"`
 	Network           string   `json:"network"`
@@ -32,4 +32,31 @@ type GetCurrency struct {
 	AddressExplorer   string   `json:"address_explorer"`
 	TxExplorer        string   `json:"tx_explorer"`
 	ConfirmationsFrom string   `json:"confirmations_from"`
+}
+
+type Pairs []string
+
+type AllPairs map[string][]string
+
+type Exchange struct {
+	ID                string              `json:"id"`
+	Type              string              `json:"type"`
+	Timestamp         string              `json:"timestamp"`
+	UpdatedAt         string              `json:"updated_at"`
+	CurrencyFrom      string              `json:"currency_from"`
+	CurrencyTo        string              `json:"currency_to"`
+	AmountFrom        string              `json:"amount_from"`
+	ExpectedAmount    string              `json:"expected_amount"`
+	AmountTo          string              `json:"amount_to"`
+	AddressFrom       string              `json:"address_from"`
+	AddressTo         string              `json:"address_to"`
+	ExtraIDFrom       string              `json:"extra_id_from"`
+	ExtraIDTo         string              `json:"extra_id_to"`
+	UserRefundAddress string              `json:"user_refund_address"`
+	UserRefundExtraID string              `json:"user_refund_extra_id"`
+	TxFrom            string              `json:"tx_from"`
+	TxTo              string              `json:"tx_to"`
+	Status            string              `json:"status"`
+	RedirectURL       string              `json:"redirect_url"`
+	Currencies        map[string]Currency `json:"currencies"`
 }
