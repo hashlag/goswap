@@ -254,3 +254,125 @@ func (p *Provider) GetExchange(id string) (models.Exchange, error) {
 
 	return r, err
 }
+
+func (p *Provider) GetExchanges(limit, offset int, gte, lte string) ([]models.Exchange, error) {
+	var optionals string
+
+	if gte != "" {
+		optionals += "&gte=" + gte
+	}
+
+	if lte != "" {
+		optionals += "&lte=" + lte
+	}
+	
+	req, err := http.NewRequest(
+		http.MethodGet,
+		p.BuildURL(
+			"get_exchanges",
+			"&limit=", strconv.Itoa(limit),
+			"&offset=", strconv.Itoa(offset),
+			optionals,
+		),
+		nil,
+	)
+	if err != nil {
+		return nil, err
+	}
+
+	statusCode, bodyBytes, err := p.RequestDoBytes(req)
+	if err != nil {
+		return nil, err
+	}
+
+	if statusCode != 200 {
+		apiError := &models.APIError{}
+
+		if err := json.Unmarshal(bodyBytes, apiError); err != nil {
+			return nil, err
+		}
+
+		return nil, apiError
+	}
+
+	var r []models.Exchange
+
+	err = json.Unmarshal(bodyBytes, &r)
+
+	return r, err
+}
+
+func (p *Provider) GetRanges(fixed bool, currencyFrom, currencyTo string) (models.Ranges, error) {
+	req, err := http.NewRequest(
+		http.MethodGet,
+		p.BuildURL(
+			"get_ranges",
+			"&fixed=", strconv.FormatBool(fixed),
+			"&currency_from=", currencyFrom,
+			"&currency_to=", currencyTo,
+		),
+		nil,
+	)
+	if err != nil {
+		return models.Ranges{}, err
+	}
+
+	statusCode, bodyBytes, err := p.RequestDoBytes(req)
+	if err != nil {
+		return models.Ranges{}, err
+	}
+
+	if statusCode != 200 {
+		apiError := &models.APIError{}
+
+		if err := json.Unmarshal(bodyBytes, apiError); err != nil {
+			return models.Ranges{}, err
+		}
+
+		return models.Ranges{}, apiError
+	}
+
+	var r models.Ranges
+
+	err = json.Unmarshal(bodyBytes, &r)
+
+	return r, err
+}
+
+func (p *Provider) GetEstimated(fixed bool, currencyFrom, currencyTo string, amount float64) (string, error) {
+	req, err := http.NewRequest(
+		http.MethodGet,
+		p.BuildURL(
+			"get_estimated",
+			"&fixed=", strconv.FormatBool(fixed),
+			"&currency_from=", currencyFrom,
+			"&currency_to=", currencyTo,
+			"&amount=", strconv.FormatFloat(amount, 'f', -1, 64),
+		),
+		nil,
+	)
+	if err != nil {
+		return "", err
+	}
+
+	statusCode, bodyBytes, err := p.RequestDoBytes(req)
+	if err != nil {
+		return "", err
+	}
+
+	if statusCode != 200 {
+		apiError := &models.APIError{}
+
+		if err := json.Unmarshal(bodyBytes, apiError); err != nil {
+			return "", err
+		}
+
+		return "", apiError
+	}
+
+	var r string
+
+	err = json.Unmarshal(bodyBytes, &r)
+
+	return r, err
+}

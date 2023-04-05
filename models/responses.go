@@ -60,3 +60,8 @@ type Exchange struct {
 	RedirectURL       string              `json:"redirect_url"`
 	Currencies        map[string]Currency `json:"currencies"`
 }
+
+type Ranges struct {
+	Min string `json:"min"`
+	Max string `json:"max"`
+}

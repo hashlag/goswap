@@ -129,3 +129,33 @@ func TestGetExchange(t *testing.T) {
 		t.Error("empty exchange id or/and timestamp")
 	}
 }
+
+func TestGetExchanges(t *testing.T) {
+	exchanges, err := provider.GetExchanges(50, 0, "", "")
+	if err != nil {
+		t.Error(err)
+		return
+	}
+
+	t.Logf("exchanges found: %d", len(exchanges))
+}
+
+func TestGetRanges(t *testing.T) {
+	ranges, err := provider.GetRanges(false, "ltc", "btc")
+	if err != nil {
+		t.Error(err)
+		return
+	}
+
+	t.Logf("min: %s max: %s", ranges.Min, ranges.Max)
+}
+
+func TestGetEstimated(t *testing.T) {
+	estimated, err := provider.GetEstimated(false, "ltc", "btc", float64(1.77))
+	if err != nil {
+		t.Error(err)
+		return
+	}
+
+	t.Logf("estimated amount: %s", estimated)
+}
