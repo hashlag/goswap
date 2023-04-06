@@ -65,3 +65,11 @@ type Ranges struct {
 	Min string `json:"min"`
 	Max string `json:"max"`
 }
+
+type MarketInfo struct {
+	CurrencyFrom string `json:"currency_from"`
+	CurrencyTo   string `json:"currency_to"`
+	Min          string `json:"min"`
+	Max          string `json:"max"`
+	Rate         string `json:"rate"`
+}

@@ -159,3 +159,25 @@ func TestGetEstimated(t *testing.T) {
 
 	t.Logf("estimated amount: %s", estimated)
 }
+
+func TestCheckExchnages(t *testing.T) {
+	possible, err := provider.CheckExchanges(false, "ltc", "btc", float64(1.77))
+	if err != nil {
+		t.Error(err)
+		return
+	}
+
+	t.Logf("possible to create an exchnage: %t", possible)
+}
+
+func TestGetMarketInfo(t *testing.T) {
+	marketInfo, err := provider.GetMarketInfo()
+	if err != nil {
+		t.Error(err)
+		return
+	}
+
+	if len(marketInfo) == 0 {
+		t.Error("empty market info array")
+	}
+}

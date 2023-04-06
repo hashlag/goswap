@@ -265,7 +265,7 @@ func (p *Provider) GetExchanges(limit, offset int, gte, lte string) ([]models.Ex
 	if lte != "" {
 		optionals += "&lte=" + lte
 	}
-	
+
 	req, err := http.NewRequest(
 		http.MethodGet,
 		p.BuildURL(
@@ -371,6 +371,76 @@ func (p *Provider) GetEstimated(fixed bool, currencyFrom, currencyTo string, amo
 	}
 
 	var r string
+
+	err = json.Unmarshal(bodyBytes, &r)
+
+	return r, err
+}
+
+func (p *Provider) CheckExchanges(fixed bool, currencyFrom, currencyTo string, amount float64) (bool, error) {
+	req, err := http.NewRequest(
+		http.MethodGet,
+		p.BuildURL(
+			"check_exchanges",
+			"&fixed=", strconv.FormatBool(fixed),
+			"&currency_from=", currencyFrom,
+			"&currency_to=", currencyTo,
+			"&amount=", strconv.FormatFloat(amount, 'f', -1, 64),
+		),
+		nil,
+	)
+	if err != nil {
+		return false, err
+	}
+
+	statusCode, bodyBytes, err := p.RequestDoBytes(req)
+	if err != nil {
+		return false, err
+	}
+
+	if statusCode != 200 {
+		apiError := &models.APIError{}
+
+		if err := json.Unmarshal(bodyBytes, apiError); err != nil {
+			return false, err
+		}
+
+		return false, apiError
+	}
+
+	var r bool
+
+	err = json.Unmarshal(bodyBytes, &r)
+
+	return r, err
+}
+
+func (p *Provider) GetMarketInfo() ([]models.MarketInfo, error) {
+	req, err := http.NewRequest(
+		http.MethodGet,
+		p.BuildURL("get_market_info"),
+		nil,
+	)
+	if err != nil {
+		return nil, err
+	}
+
+	statusCode, bodyBytes, err := p.RequestDoBytes(req)
+	if err != nil {
+		return nil, err
+	}
+
+	if statusCode != 200 {
+		apiError := &models.APIError{}
+
+		if err := json.Unmarshal(bodyBytes, apiError); err != nil {
+			return nil, err
+		}
+
+		return nil, apiError
+	}
+
+	var r []models.MarketInfo
 
 	err = json.Unmarshal(bodyBytes, &r)
 
