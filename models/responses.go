@@ -34,10 +34,6 @@ type Currency struct {
 	ConfirmationsFrom string   `json:"confirmations_from"`
 }
 
-type Pairs []string
-
-type AllPairs map[string][]string
-
 type Exchange struct {
 	ID                string              `json:"id"`
 	Type              string              `json:"type"`

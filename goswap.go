@@ -112,7 +112,7 @@ func (p *Provider) GetAllCurrencies() ([]models.Currency, error) {
 	return r, err
 }
 
-func (p *Provider) GetPairs(fixed bool, symbol string) (models.Pairs, error) {
+func (p *Provider) GetPairs(fixed bool, symbol string) ([]string, error) {
 	req, err := http.NewRequest(
 		http.MethodGet,
 		p.BuildURL("get_pairs", "&fixed=", strconv.FormatBool(fixed), "&symbol=", symbol),
@@ -137,14 +137,14 @@ func (p *Provider) GetPairs(fixed bool, symbol string) (models.Pairs, error) {
 		return nil, apiError
 	}
 
-	var r models.Pairs
+	var r []string
 
 	err = json.Unmarshal(bodyBytes, &r)
 
 	return r, err
 }
 
-func (p *Provider) GetAllPairs(fixed bool) (models.AllPairs, error) {
+func (p *Provider) GetAllPairs(fixed bool) (map[string][]string, error) {
 	req, err := http.NewRequest(
 		http.MethodGet,
 		p.BuildURL("get_all_pairs", "&fixed=", strconv.FormatBool(fixed)),
@@ -169,7 +169,7 @@ func (p *Provider) GetAllPairs(fixed bool) (models.AllPairs, error) {
 		return nil, apiError
 	}
 
-	var r models.AllPairs
+	var r map[string][]string
 
 	err = json.Unmarshal(bodyBytes, &r)
 
