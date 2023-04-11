@@ -215,7 +215,7 @@ fmt.Println(exchange.Status) // "confirming", for example
 
 `exchange` is a `models.Exchange`
 
-### [Get info about exchanges created with the API key](https://api.simpleswap.io/#/Exchange/ExchangeController_getAllExchanges)
+### [Get info about created exchanges](https://api.simpleswap.io/#/Exchange/ExchangeController_getAllExchanges)
 
 ```go
 exchanges, err := provider.GetExchanges(50, 0, "", "")

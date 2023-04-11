@@ -1,18 +1,26 @@
 package goswap_test
 
 import (
+	"log"
 	"testing"
 
 	"github.com/wachttijd/goswap"
 	"github.com/wachttijd/goswap/models"
 )
 
+const API_KEY = "API_KEY"
+
 var provider = goswap.NewProvider(
 	"https://api.simpleswap.io",
-
-	// test API key
-	"71c46760-92cf-45f4-b5c1-0bbf8031283b",
+	API_KEY,
 )
+
+func TestKey(t *testing.T) {
+	if API_KEY == "API_KEY" {
+		t.Fail()
+		log.Fatalln("insert your API key")
+	}
+}
 
 func TestGetCurrency(t *testing.T) {
 	currency, err := provider.GetCurrency("btc")
