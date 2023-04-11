@@ -16,7 +16,7 @@ Import GOSWAP, API models and create a provider:
 
 ```go
 import (
-    "github.com/wachttijd/goswap"
+	"github.com/wachttijd/goswap"
 	"github.com/wachttijd/goswap/models"
 )
 
