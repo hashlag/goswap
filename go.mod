@@ -1,3 +1,3 @@
-module github.com/wachttijd/goswap
+module github.com/hashlag/goswap
 
 go 1.20

@@ -9,7 +9,7 @@ import (
 	"strconv"
 	"strings"
 
-	"github.com/wachttijd/goswap/models"
+	"github.com/hashlag/goswap/models"
 )
 
 type Provider struct {

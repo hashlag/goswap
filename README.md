@@ -7,7 +7,7 @@ You can get details about the API in the [documentation](https://api.simpleswap.
 ## Installation
 
 ```bash
-go get github.com/wachttijd/goswap
+go get github.com/hashlag/goswap
 ```
 
 ## Usage
@@ -16,8 +16,8 @@ Import GOSWAP, API models and create a provider:
 
 ```go
 import (
-	"github.com/wachttijd/goswap"
-	"github.com/wachttijd/goswap/models"
+	"github.com/hashlag/goswap"
+	"github.com/hashlag/goswap/models"
 )
 
 var provider = goswap.NewProvider(
@@ -358,4 +358,4 @@ type APIError struct {
 
 ## License
 
-This project is licensed under the MIT License. See the [LICENSE](https://raw.githubusercontent.com/wachttijd/goswap/main/LICENSE) file for details.
+This project is licensed under the MIT License. See the [LICENSE](https://raw.githubusercontent.com/hashlag/goswap/main/LICENSE) file for details.

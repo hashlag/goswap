@@ -4,8 +4,8 @@ import (
 	"log"
 	"testing"
 
-	"github.com/wachttijd/goswap"
-	"github.com/wachttijd/goswap/models"
+	"github.com/hashlag/goswap"
+	"github.com/hashlag/goswap/models"
 )
 
 const API_KEY = "API_KEY"
