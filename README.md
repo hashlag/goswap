@@ -304,7 +304,7 @@ fmt.Println(possible) // true, for example
 
 `possible` is a `bool`
 
-### [Get full market info (only fixed rate)]()
+### [Get full market info (only fixed rate)](https://api.simpleswap.io/#/Market/MarketController_getMarketInfo)
 
 ```go
 marketInfo, err := provider.GetMarketInfo()
